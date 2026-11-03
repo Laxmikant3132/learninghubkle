@@ -1,0 +1,7 @@
+{
+  "name": "Learn Hub - Online Learning & Course Platform",
+  "description": "Comprehensive learning platform featuring online courses, interactive learner dashboard, course catalog with filters, task tracking, and community study groups.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

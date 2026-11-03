@@ -1,0 +1,189 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with role-based access control and approval status",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 150 },
+        "role": { "type": "string", "enum": ["admin", "student"] },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "avatar": { "type": "string", "maxLength": 500 },
+        "headline": { "type": "string", "maxLength": 150 },
+        "weeklyGoalHours": { "type": "number" },
+        "completedCoursesCount": { "type": "number" },
+        "enrolledCoursesCount": { "type": "number" },
+        "createdAt": { "type": "string", "maxLength": 50 },
+        "updatedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "name", "email", "role", "status"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "Educational course item in Learn Hub",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "category": { "type": "string", "maxLength": 100 },
+        "level": { "type": "string", "maxLength": 50 },
+        "language": { "type": "string", "maxLength": 50 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "thumbnail": { "type": "string", "maxLength": 500 },
+        "instructorName": { "type": "string", "maxLength": 100 },
+        "instructorRole": { "type": "string", "maxLength": 100 },
+        "instructorAvatar": { "type": "string", "maxLength": 500 },
+        "rating": { "type": "number" },
+        "studentsCount": { "type": "number" },
+        "totalLessons": { "type": "number" },
+        "durationMinutes": { "type": "number" },
+        "featured": { "type": "boolean" },
+        "trending": { "type": "boolean" }
+      },
+      "required": ["id", "title", "category", "instructorName"]
+    },
+    "Notice": {
+      "title": "Notice",
+      "description": "Broadcast notice posted by admin to all students' inboxes",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "content": { "type": "string", "maxLength": 3000 },
+        "authorName": { "type": "string", "maxLength": 100 },
+        "authorEmail": { "type": "string", "maxLength": 150 },
+        "priority": { "type": "string", "enum": ["urgent", "normal", "info"] },
+        "tag": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "title", "content", "authorEmail"]
+    },
+    "LiveSession": {
+      "title": "LiveSession",
+      "description": "Live meeting session conducted or scheduled by admin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "topic": { "type": "string", "maxLength": 150 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "scheduledAt": { "type": "string", "maxLength": 50 },
+        "durationMinutes": { "type": "number" },
+        "hostName": { "type": "string", "maxLength": 100 },
+        "status": { "type": "string", "enum": ["scheduled", "live", "completed"] },
+        "meetingUrl": { "type": "string", "maxLength": 500 },
+        "attendeesCount": { "type": "number" },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "title", "scheduledAt", "status"]
+    },
+    "Quiz": {
+      "title": "Quiz",
+      "description": "AI literacy and technology quiz created by admin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "topic": { "type": "string", "maxLength": 150 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "durationMinutes": { "type": "number" },
+        "passingScore": { "type": "number" },
+        "totalQuestions": { "type": "number" },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "title", "topic"]
+    },
+    "QuizSubmission": {
+      "title": "QuizSubmission",
+      "description": "Student quiz submission record with answers and score",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "quizId": { "type": "string", "maxLength": 128 },
+        "quizTitle": { "type": "string", "maxLength": 200 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "studentName": { "type": "string", "maxLength": 100 },
+        "studentEmail": { "type": "string", "maxLength": 150 },
+        "score": { "type": "number" },
+        "totalQuestions": { "type": "number" },
+        "percentage": { "type": "number" },
+        "passed": { "type": "boolean" },
+        "submittedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "quizId", "userId", "score"]
+    },
+    "Enrollment": {
+      "title": "Enrollment",
+      "description": "Student enrollment and progress tracking for a course",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "courseId": { "type": "string", "maxLength": 128 },
+        "courseTitle": { "type": "string", "maxLength": 200 },
+        "courseCategory": { "type": "string", "maxLength": 100 },
+        "courseThumbnail": { "type": "string", "maxLength": 500 },
+        "instructorName": { "type": "string", "maxLength": 100 },
+        "instructorAvatar": { "type": "string", "maxLength": 500 },
+        "totalLessons": { "type": "number" },
+        "completedLessons": { "type": "number" },
+        "progressPercent": { "type": "number" },
+        "lastWatchedLesson": { "type": "string", "maxLength": 200 },
+        "updatedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "userId", "courseId", "courseTitle"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "User homework, project, or learning task",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 250 },
+        "courseName": { "type": "string", "maxLength": 150 },
+        "dueDate": { "type": "string", "maxLength": 50 },
+        "completed": { "type": "boolean" },
+        "priority": { "type": "string", "maxLength": 20 },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "userId", "title"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "UserProfile" },
+      "description": "User profiles store role, approval status, settings, and goals"
+    },
+    "/courses/{courseId}": {
+      "schema": { "$ref": "Course" },
+      "description": "Protected course materials accessible only to admin and approved students"
+    },
+    "/notices/{noticeId}": {
+      "schema": { "$ref": "Notice" },
+      "description": "Important announcements posted by admin to all students"
+    },
+    "/live_sessions/{sessionId}": {
+      "schema": { "$ref": "LiveSession" },
+      "description": "Live meetings scheduled and hosted by admin"
+    },
+    "/quizzes/{quizId}": {
+      "schema": { "$ref": "Quiz" },
+      "description": "Quizzes created by admin on AI readiness and technology topics"
+    },
+    "/quiz_submissions/{submissionId}": {
+      "schema": { "$ref": "QuizSubmission" },
+      "description": "Student quiz attempts and graded submissions"
+    },
+    "/enrollments/{enrollmentId}": {
+      "schema": { "$ref": "Enrollment" },
+      "description": "Student course enrollments and watch history"
+    },
+    "/tasks/{taskId}": {
+      "schema": { "$ref": "Task" },
+      "description": "Student assignment and milestone tasks"
+    }
+  }
+}
