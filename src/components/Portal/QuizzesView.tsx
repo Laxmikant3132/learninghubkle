@@ -64,8 +64,9 @@ export const QuizzesView: React.FC = () => {
     let unsubSubs = () => {};
     if (currentUser?.id) {
       unsubSubs = subscribeToQuizSubmissions(
-        (subs) => setQuizSubmissions(subs.filter((s) => s.userId === currentUser.id)),
-        (err) => console.error('Submissions sub error:', err)
+        (subs) => setQuizSubmissions(subs),
+        (err) => console.error('Submissions sub error:', err),
+        currentUser.id
       );
     }
 

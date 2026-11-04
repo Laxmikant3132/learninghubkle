@@ -325,9 +325,15 @@ export async function submitQuizAttempt(submissionData: Omit<QuizSubmission, 'id
   }
 }
 
-export function subscribeToQuizSubmissions(callback: (submissions: QuizSubmission[]) => void, onError?: (err: any) => void) {
-  const col = collection(db, 'quiz_submissions');
-  return onSnapshot(col, (snapshot) => {
+export function subscribeToQuizSubmissions(
+  callback: (submissions: QuizSubmission[]) => void, 
+  onError?: (err: any) => void,
+  userId?: string
+) {
+  const colRef = collection(db, 'quiz_submissions');
+  const q = userId ? query(colRef, where('userId', '==', userId)) : colRef;
+
+  return onSnapshot(q, (snapshot) => {
     const list: QuizSubmission[] = [];
     snapshot.forEach(d => list.push(d.data() as QuizSubmission));
     list.sort((a, b) => new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime());

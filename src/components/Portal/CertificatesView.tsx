@@ -39,10 +39,11 @@ export const CertificatesView: React.FC = () => {
     if (currentUser?.id) {
       unsub = subscribeToQuizSubmissions(
         (allSubs) => {
-          const userPassed = allSubs.filter((s) => s.userId === currentUser.id && s.passed);
+          const userPassed = allSubs.filter((s) => s.passed);
           setQuizSubmissions(userPassed);
         },
-        (err) => console.error('Error fetching submissions for certs:', err)
+        (err) => console.error('Error fetching submissions for certs:', err),
+        currentUser.id
       );
     }
     const unsubQuizzes = subscribeToQuizzes(

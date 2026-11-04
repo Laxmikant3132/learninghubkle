@@ -46,6 +46,8 @@ interface AppState {
   selectedQuizForAttempt: Quiz | null;
   isAuthModalOpen: boolean;
   authModalMode: 'login' | 'signup';
+  isMobileMenuOpen: boolean;
+  toggleMobileMenu: () => void;
   
   // Filtering & Search
   globalSearchQuery: string;
@@ -114,6 +116,8 @@ export const useAppStore = create<AppState>((set, get) => ({
   selectedQuizForAttempt: null,
   isAuthModalOpen: false,
   authModalMode: 'login',
+  isMobileMenuOpen: false,
+  toggleMobileMenu: () => set((state) => ({ isMobileMenuOpen: !state.isMobileMenuOpen })),
   
   globalSearchQuery: '',
   selectedCategory: 'All',

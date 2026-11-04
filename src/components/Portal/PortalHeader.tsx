@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppStore } from '../../store/useAppStore';
-import { Search, Bell, ExternalLink, Check, Sparkles } from 'lucide-react';
+import { Search, Bell, ExternalLink, Check, Sparkles, Menu } from 'lucide-react';
 
 export const PortalHeader: React.FC = () => {
   const { 
@@ -9,7 +9,8 @@ export const PortalHeader: React.FC = () => {
     globalSearchQuery, 
     setGlobalSearchQuery, 
     setPortalView, 
-    inboxMessages 
+    inboxMessages,
+    toggleMobileMenu
   } = useAppStore();
 
   const [showNotifications, setShowNotifications] = useState(false);
@@ -21,10 +22,19 @@ export const PortalHeader: React.FC = () => {
   };
 
   return (
-    <header className="h-20 px-6 bg-white border-b border-slate-200/80 flex items-center justify-between gap-4 sticky top-0 z-20">
+    <header className="h-20 px-4 sm:px-6 bg-white border-b border-slate-200/80 flex items-center justify-between gap-3 sticky top-0 z-20">
       
-      {/* Search Input matching Screenshot 2 */}
-      <div className="relative flex-1 max-w-xl">
+      {/* Mobile Menu Toggle + Search */}
+      <div className="flex items-center gap-3 flex-1 max-w-xl">
+        <button
+          onClick={toggleMobileMenu}
+          className="md:hidden p-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer shrink-0"
+          aria-label="Toggle Menu"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+
+        <div className="relative flex-1">
         <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
         <input
           type="text"
@@ -41,6 +51,7 @@ export const PortalHeader: React.FC = () => {
             ✕
           </button>
         )}
+        </div>
       </div>
 
       {/* Right Action Icons: Notification bell, User chip, Landing toggle */}

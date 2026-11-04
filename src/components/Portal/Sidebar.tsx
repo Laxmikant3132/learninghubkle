@@ -29,7 +29,9 @@ export const Sidebar: React.FC = () => {
     liveSessions,
     quizzes,
     tasks,
-    quizSubmissions
+    quizSubmissions,
+    isMobileMenuOpen,
+    toggleMobileMenu
   } = useAppStore();
 
   const unreadMessagesCount = inboxMessages.filter((m) => m.unread).length + notices.length;
@@ -62,12 +64,23 @@ export const Sidebar: React.FC = () => {
   };
 
   return (
-    <aside className="w-64 bg-white border-r border-slate-200/80 flex flex-col justify-between h-screen sticky top-0 shrink-0 select-none z-30">
+    <>
+      {/* Mobile Backdrop Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          onClick={toggleMobileMenu}
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 md:hidden"
+        />
+      )}
+
+      <aside className={`w-64 bg-white border-r border-slate-200/80 flex flex-col justify-between h-screen fixed md:static inset-y-0 left-0 z-50 transform ${
+        isMobileMenuOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full md:translate-x-0'
+      } transition-transform duration-300 ease-in-out shrink-0 select-none`}>
       
       {/* Top Brand Logo matching Screenshot 2 */}
       <div>
         <div 
-          onClick={() => navigate('/')}
+          onClick={() => { navigate('/'); if (isMobileMenuOpen) toggleMobileMenu(); }}
           className="p-6 flex items-center gap-3 cursor-pointer group"
         >
           <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center group-hover:bg-indigo-600 transition-colors shadow-sm">
@@ -91,7 +104,10 @@ export const Sidebar: React.FC = () => {
             return (
               <button
                 key={item.id}
-                onClick={() => setPortalView(item.id)}
+                onClick={() => {
+                  setPortalView(item.id);
+                  if (isMobileMenuOpen) toggleMobileMenu();
+                }}
                 className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                   isActive
                     ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
@@ -147,5 +163,6 @@ export const Sidebar: React.FC = () => {
       </div>
 
     </aside>
+    </>
   );
 };
